@@ -1,33 +1,5 @@
 
-Skip to content
-Search or jump to…
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@ravibisht 
-ravibisht
-/
-creatorbit
-Public
-Code
-Issues
-Pull requests
-Actions
-Projects
-Wiki
-Security
-Insights
-Settings
-creatorbit/.gitignore
-@ravibisht
-ravibisht feat: campaign ctategory added
-Latest commit 20fc0d3 on Apr 22
- History
- 1 contributor
-110 lines (80 sloc)  1.6 KB
-   
+
 # Logs
 logs
 *.log
@@ -138,16 +110,3 @@ dist
 
 tmp
 content
-© 2022 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Docs
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
-Loading complete

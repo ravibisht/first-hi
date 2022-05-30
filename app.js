@@ -1,40 +1,59 @@
-import express from 'express'
+import express, { urlencoded } from 'express'
+import 'express-async-errors'
+import 'dotenv/config'
 import path from 'path'
 import http from 'http'
 import { Server } from 'socket.io'
+import passport from 'passport'
+import authRouter from './auth/router'
+import MongoStore from 'connect-mongo'
+import mongoose from 'mongoose'
+import session from 'express-session'
+import connectDB from './core/db'
+import { errorHandlerMiddleWare } from './core/middleware'
+
+
+import { BadRequestException } from './core/exception/index.js'
 
 export const app = express()
-export const server = http.createServer(app)
 
-const io = new Server(server, {})
 
 app.use(express.static('public'))
+app.use(urlencoded({ extended: true }))
+
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    store : MongoStore.create({ mongoUrl : process.env.MONGO_DB_URI}),
+    unset: 'destroy',
+    cookie: {
+        maxAge: 24 * 60 * 60 * 60 * 1000,
+    },
+
+}))
+
+
+connectDB(process.env.MONGO_DB_URI).catch((err) => console.log(`Erros is here => ${err}`))
+
+app.use(passport.initialize())
 
 /**
- * Events
- */
-const FIRST_HI = 'first-hi'
-const JOINED_USERS = 'joined-user'
-const ONLINE_USERS = 'online-user'
-
-io.on('connection', (socket) => {
-    socket.on(FIRST_HI, (message, ackCallback) => {
-        ackCallback({ status: 'OK' })
-
-        io.emit(FIRST_HI, message)
-    })
-
-    socket.emit('first-hi', 'Server Hello')
-})
+ * Api URLS
+ * */
+app.use('/', authRouter)
 
 app.get('/', (req, res) => {
+
+    if (!req.session.user || !req.session.user.id) {
+        res.redirect('/login')
+        return
+    }
     res.sendFile('index.html', {
-        root: path.resolve('.') + '/public/html/',
+        root: path.join(path.resolve('.'), 'public', 'html'),
     })
 })
 
-app.get('/login', (req, res) => {
-    res.sendFile('login.html', {
-        root: path.resolve('.') + '/public/html/',
-    })
-})
+app.use(errorHandlerMiddleWare)
+
+

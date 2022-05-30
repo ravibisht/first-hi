@@ -1,0 +1,25 @@
+@font-face {
+    font-family: 'FF Tisa Sans Pro';
+    src: local('FF Tisa Sans Pro ExtraBold'), local('FF-Tisa-Sans-Pro-ExtraBold'),
+        url('/font/TisaSansPro-ExtraBold.woff2') format('woff2'),
+        url('/font/TisaSansPro-ExtraBold.woff') format('woff'),
+        url('/font/TisaSansPro-ExtraBold.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+  }
+
+body{
+    background-image: linear-gradient(to right, #7dd56f, #28b487);
+    font-family: ff-tisa-sans-web-pro, sans-serif;
+
+}
+
+.rounded-5 {
+    border-radius:20px !important;
+
+}
+
+img.logo {
+    height: 28px;
+    width: 100%;
+}

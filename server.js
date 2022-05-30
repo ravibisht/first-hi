@@ -1,4 +1,4 @@
-import { app, server } from './app'
+import { app } from './app'
 
 process.on('uncaughtException', (err) => {
     console.log(err)
@@ -7,6 +7,6 @@ process.on('uncaughtException', (err) => {
 
 const PORT = process.env.PORT || 80
 
-server.listen(PORT, () => {
+app.listen(PORT, () => {
     console.log(`First Hi is Ready to Receive Messages`)
 })
